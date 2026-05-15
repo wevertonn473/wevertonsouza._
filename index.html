@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weverton Souza — Editor de Conteúdo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #101010;
+      --surface2: #161616;
+      --text: #f0ede6;
+      --muted: #555;
+      --accent: #e8ff00;
+      --accent2: #ff3c00;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Syne', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(232,255,0,0.4);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.12s ease;
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring {
+      width: 56px; height: 56px;
+      border-color: var(--accent);
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; width: 100%;
+      z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(8,8,8,0.7);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(232,255,0,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(255,60,0,0.06) 0%, transparent 60%);
+    }
+
+    .hero-noise {
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5; pointer-events: none;
+    }
+
+    .hero-counter {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 14vw, 14rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s ease forwards;
+    }
+    .hero-title .accent-line {
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s ease forwards;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--muted);
+      max-width: 340px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .hero-tagline strong { color: var(--text); }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      background: var(--accent);
+      color: #080808;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-cta::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--accent2);
+      transform: translateX(-101%);
+      transition: transform 0.3s ease;
+    }
+    .hero-cta:hover::after { transform: translateX(0); }
+    .hero-cta span { position: relative; z-index: 1; }
+    .hero-cta svg { position: relative; z-index: 1; }
+
+    .scroll-line {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 1s 1.2s ease forwards;
+    }
+    .scroll-line span {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .scroll-line-bar {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: grow 2s 1.5s ease infinite;
+    }
+    @keyframes grow {
+      0%, 100% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+    }
+
+    /* ── SOBRE ── */
+    #sobre {
+      padding: 8rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .sobre-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 1;
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+    }
+    .sobre-text h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .sobre-text p {
+      color: #888;
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+    .sobre-text p strong { color: var(--text); }
+
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .sobre-frame::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(232,255,0,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(255,60,0,0.08) 0%, transparent 60%);
+    }
+    .sobre-frame-inner {
+      position: absolute; inset: 2rem;
+      border: 1px solid rgba(232,255,0,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sobre-icon {
+      font-size: 4rem; opacity: 0.15;
+    }
+    .sobre-frame-label {
+      position: absolute; bottom: 1.5rem; left: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+    }
+    .sobre-accent-num {
+      position: absolute; top: -1.5rem; right: -1.5rem;
+      font-family: var(--font-display);
+      font-size: 8rem;
+      color: rgba(232,255,0,0.06);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* ── PROJETOS ── */
+    #projetos {
+      padding: 6rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    #projetos .section-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 2rem;
+    }
+    #projetos h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+    .project-count {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+      transition: border-color 0.3s;
+    }
+    .project-card:hover { border-color: rgba(232,255,0,0.3); }
+
+    .project-card:nth-child(1) { grid-column: span 7; }
+    .project-card:nth-child(2) { grid-column: span 5; }
+    .project-card:nth-child(3) { grid-column: span 4; }
+    .project-card:nth-child(4) { grid-column: span 8; }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-thumb-inner {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-thumb-inner { transform: scale(1.05); }
+
+    .thumb-1 { background: linear-gradient(135deg, #1a1a1a 0%, #0d1a00 100%); }
+    .thumb-2 { background: linear-gradient(135deg, #1a0d00 0%, #1a1a1a 100%); }
+    .thumb-3 { background: linear-gradient(135deg, #0d0d1a 0%, #1a1a0d 100%); }
+    .thumb-4 { background: linear-gradient(135deg, #1a0a0a 0%, #0a0d1a 100%); }
+
+    .thumb-play {
+      width: 48px; height: 48px;
+      border: 1px solid rgba(232,255,0,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .project-card:hover .thumb-play {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .project-card:hover .thumb-play svg { fill: #080808; }
+
+    .thumb-play svg {
+      width: 16px; fill: rgba(232,255,0,0.6);
+      margin-left: 3px;
+      transition: fill 0.3s;
+    }
+
+    .project-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(8,8,8,0.8) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .project-overlay { opacity: 1; }
+
+    .project-info {
+      padding: 1.2rem 1.5rem;
+    }
+    .project-num {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.4rem;
+    }
+    .project-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    .project-tags {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .project-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SKILLS ── */
+    #skills {
+      padding: 8rem 2.5rem;
+      background: var(--surface);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .skills-inner {
+      max-width: 1300px; margin: 0 auto;
+    }
+    #skills h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      line-height: 1;
+      margin-bottom: 4rem;
+    }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+
+    .skill-group-title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .skill-item {
+      margin-bottom: 2rem;
+    }
+    .skill-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.6rem;
+    }
+    .skill-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .skill-level {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent);
+    }
+    .skill-bar {
+      height: 2px;
+      background: rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      width: 0;
+      transition: width 1.2s ease;
+    }
+    .skill-item.visible .skill-fill { width: var(--w); }
+
+    .skill-tags-list {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .skill-tag-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s;
+    }
+    .skill-tag-item:hover { border-color: rgba(232,255,0,0.2); }
+    .skill-tag-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .skill-tag-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .skill-tag-desc {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-left: auto;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── CONTATO / FOOTER ── */
+    footer {
+      padding: 8rem 2.5rem 4rem;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .contact-big {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 3rem;
+    }
+    .contact-big a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: block;
+    }
+    .contact-big a:hover { color: var(--accent); }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+    }
+    .footer-social {
+      display: flex; gap: 1.5rem;
+    }
+    .footer-social a {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .footer-social a:hover { color: var(--accent); }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 1.2rem 0;
+      background: var(--surface2);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-item {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 0.05em;
+      padding: 0 2rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .marquee-item span { color: var(--accent); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    [data-animate] {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    [data-animate].visible {
+      opacity: 1; transform: translateY(0);
+    }
+    [data-animate][data-delay="1"] { transition-delay: 0.1s; }
+    [data-animate][data-delay="2"] { transition-delay: 0.2s; }
+    [data-animate][data-delay="3"] { transition-delay: 0.3s; }
+    [data-animate][data-delay="4"] { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      #sobre { grid-template-columns: 1fr; gap: 3rem; }
+      .sobre-visual { display: none; }
+      .skills-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .project-card:nth-child(1),
+      .project-card:nth-child(2),
+      .project-card:nth-child(3),
+      .project-card:nth-child(4) { grid-column: span 12; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { padding: 0 1.5rem 4rem; }
+      #sobre, #projetos, #skills .skills-inner, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 2rem; }
+      #projetos .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+      .contact-big { font-size: clamp(2.5rem, 12vw, 5rem); }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">WS<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#projetos">Projetos</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-counter">— EDITOR DE CONTEÚDO DIGITAL</div>
+
+    <h1 class="hero-title">
+      WEVERTON<br>
+      <span class="accent-line">SOUZA</span>
+    </h1>
+
+    <div class="hero-bottom">
+      <p class="hero-tagline">
+        <strong>Histórias que prendem o scroll.</strong><br>
+        Edição de Reels e vídeos para internet com corte preciso, ritmo e intenção — do bruto ao viral.
+      </p>
+      <a href="https://instagram.com/wevertonsouza._" target="_blank" class="hero-cta">
+        <span>Ver no Instagram</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="scroll-line">
+      <span>Scroll</span>
+      <div class="scroll-line-bar"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">DaVinci Resolve <span>✦</span></div>
+      <div class="marquee-item">Final Cut Pro <span>✦</span></div>
+      <div class="marquee-item">Premiere Pro <span>✦</span></div>
+      <div class="marquee-item">Reels <span>✦</span></div>
+      <div class="marquee-item">Motion Graphics <span>✦</span></div>
+      <div class="marquee-item">Color Grade <span>✦</span></div>
+      <div class="marquee-item">DaVinci Resolve <span>✦</span></div>
+      <div class="marquee-item">Final Cut Pro <span>✦</span></div>
+      <div class="marquee-item">Premiere Pro <span>✦</span></div>
+      <div class="marquee-item">Reels <span>✦</span></div>
+      <div class="marquee-item">Motion Graphics <span>✦</span></div>
+      <div class="marquee-item">Color Grade <span>✦</span></div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-text" data-animate>
+      <div class="section-label">Sobre mim</div>
+      <h2>Corte <em>certeiro,</em> vídeo que converte</h2>
+      <p>
+        Sou <strong>Weverton Souza</strong>, editor de vídeo especializado em conteúdo para internet.
+        Trabalho com <strong>Reels e vídeos de impacto</strong> — do corte inicial ao produto final
+        pronto pra postar.
+      </p>
+      <p>
+        Tenho domínio completo do fluxo de edição em <strong>DaVinci Resolve, Final Cut Pro
+        e Adobe Premiere Pro</strong>, o que me dá flexibilidade para trabalhar com qualquer cliente,
+        em qualquer pipeline.
+      </p>
+      <p>
+        Meu foco é transformar material bruto em conteúdo que <strong>prende, engaja e cresce.</strong>
+      </p>
+    </div>
+
+    <div class="sobre-visual" data-animate data-delay="2">
+      <div class="sobre-accent-num">07</div>
+      <div class="sobre-frame">
+        <div class="sobre-frame-inner">
+          <div class="sobre-icon">🎬</div>
+        </div>
+        <div class="sobre-frame-label">// WEVERTON SOUZA — EDITOR</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <div class="section-header" data-animate>
+      <h2>PROJETOS</h2>
+      <div class="project-count">04 trabalhos selecionados</div>
+    </div>
+
+    <div class="projects-grid">
+      <div class="project-card" data-animate data-delay="1">
+        <div class="project-thumb thumb-1">
+          <div class="project-thumb-inner">
+            <div class="thumb-play">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="project-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-num">01</div>
+          <div class="project-title">Série de Reels — Lifestyle</div>
+          <div class="project-tags">
+            <span class="project-tag">Reels</span>
+            <span class="project-tag">Premiere</span>
+            <span class="project-tag">Color</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-animate data-delay="2">
+        <div class="project-thumb thumb-2">
+          <div class="project-thumb-inner">
+            <div class="thumb-play">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="project-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-num">02</div>
+          <div class="project-title">Conteúdo Comercial</div>
+          <div class="project-tags">
+            <span class="project-tag">DaVinci</span>
+            <span class="project-tag">Motion</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-animate data-delay="3">
+        <div class="project-thumb thumb-3">
+          <div class="project-thumb-inner">
+            <div class="thumb-play">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="project-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-num">03</div>
+          <div class="project-title">Edição Vlog</div>
+          <div class="project-tags">
+            <span class="project-tag">Final Cut</span>
+            <span class="project-tag">Reels</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" data-animate data-delay="4">
+        <div class="project-thumb thumb-4">
+          <div class="project-thumb-inner">
+            <div class="thumb-play">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="project-overlay"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-num">04</div>
+          <div class="project-title">Campanha Social Media</div>
+          <div class="project-tags">
+            <span class="project-tag">Premiere</span>
+            <span class="project-tag">Color Grade</span>
+            <span class="project-tag">Reels</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-inner">
+      <div class="section-label" data-animate>Skills</div>
+      <h2 data-animate>FERRAMENTAS<br>& HABILIDADES</h2>
+
+      <div class="skills-layout">
+        <div data-animate>
+          <div class="skill-group-title">// Softwares de Edição</div>
+
+          <div class="skill-item" data-skill style="--w: 95%">
+            <div class="skill-header">
+              <span class="skill-name">DaVinci Resolve</span>
+              <span class="skill-level">Avançado</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+          </div>
+
+          <div class="skill-item" data-skill style="--w: 92%">
+            <div class="skill-header">
+              <span class="skill-name">Adobe Premiere Pro</span>
+              <span class="skill-level">Avançado</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+          </div>
+
+          <div class="skill-item" data-skill style="--w: 88%">
+            <div class="skill-header">
+              <span class="skill-name">Final Cut Pro</span>
+              <span class="skill-level">Avançado</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill"></div></div>
+          </div>
+        </div>
+
+        <div data-animate data-delay="2">
+          <div class="skill-group-title">// Especialidades</div>
+          <div class="skill-tags-list">
+            <div class="skill-tag-item">
+              <div class="skill-tag-dot"></div>
+              <span class="skill-tag-name">Edição de Reels</span>
+              <span class="skill-tag-desc">FOCO PRINCIPAL</span>
+            </div>
+            <div class="skill-tag-item">
+              <div class="skill-tag-dot"></div>
+              <span class="skill-tag-name">Color Grading</span>
+              <span class="skill-tag-desc">COLORAÇÃO</span>
+            </div>
+            <div class="skill-tag-item">
+              <div class="skill-tag-dot"></div>
+              <span class="skill-tag-name">Corte Rítmico</span>
+              <span class="skill-tag-desc">SINCRONIA</span>
+            </div>
+            <div class="skill-tag-item">
+              <div class="skill-tag-dot"></div>
+              <span class="skill-tag-name">Motion & Transições</span>
+              <span class="skill-tag-desc">MOVIMENTO</span>
+            </div>
+            <div class="skill-tag-item">
+              <div class="skill-tag-dot"></div>
+              <span class="skill-tag-name">Conteúdo Comercial</span>
+              <span class="skill-tag-desc">SOCIAL MEDIA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <footer id="contato">
+    <div class="section-label" data-animate>Contato</div>
+    <div class="contact-big" data-animate>
+      <a href="https://instagram.com/wevertonsouza._" target="_blank">@wevertonsouza._</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Weverton Souza — Todos os direitos reservados</span>
+      <div class="footer-social">
+        <a href="https://instagram.com/wevertonsouza._" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Intersection Observer — fade in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => observer.observe(el));
+
+    // Skill bars
+    const skillObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          skillObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('[data-skill]').forEach(el => skillObserver.observe(el));
+  </script>
+</body>
+</html>
