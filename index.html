@@ -438,11 +438,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 1;
     }
 
     .sobre-icon {
       font-size: 4rem;
       opacity: 0.15;
+    }
+
+    .sobre-foto {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      z-index: 0;
+      opacity: 0.85;
+      mix-blend-mode: luminosity;
     }
 
     .sobre-frame-label {
@@ -453,6 +466,7 @@
       font-size: 0.6rem;
       color: var(--muted);
       letter-spacing: 0.15em;
+      z-index: 1;
     }
 
     .sobre-accent-num {
@@ -1150,8 +1164,8 @@
     <div class="sobre-visual" data-animate data-delay="2">
       <div class="sobre-accent-num">07</div>
       <div class="sobre-frame">
+        <img src="foto-perfil.jpg" alt="Weverton Souza" class="sobre-foto" />
         <div class="sobre-frame-inner">
-          <div class="sobre-icon">🎬</div>
         </div>
         <div class="sobre-frame-label">// WEVERTON SOUZA — EDITOR</div>
       </div>
