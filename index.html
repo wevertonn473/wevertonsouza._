@@ -2098,9 +2098,30 @@
 
     // Detecção e Fade-in do Vídeo do Hero
     document.addEventListener('DOMContentLoaded', () => {
+      // Garante que a página comece no topo ao carregar sem hash na URL
+      if (!window.location.hash) {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+      }
+
       const video = document.getElementById('heroVideo');
       const placeholder = document.getElementById('heroVideoPlaceholder');
       
+      // Se for mobile, desativa o vídeo para economizar banda e evitar comportamento inesperado de scroll/foco
+      if (window.innerWidth <= 768 && video) {
+        video.pause();
+        video.src = '';
+        video.removeAttribute('src');
+        video.load();
+        if (placeholder) {
+          placeholder.style.opacity = '1';
+          placeholder.style.display = 'flex';
+        }
+        return;
+      }
+
       if (video && placeholder) {
         const src = video.getAttribute('src') || '';
         if (src.includes('SEU_VIDEO_AQUI.mp4') || src.trim() === '') {
