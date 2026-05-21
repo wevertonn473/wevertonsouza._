@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Impede restauração de scroll automática no mobile e garante início no topo antes da renderização
+    if (!window.location.hash) {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
+  </script>
   <title>Weverton Souza — Editor de Conteúdo</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
@@ -1611,7 +1620,7 @@
       </div>
 
       <!-- Main Video -->
-      <video class="hero-video" id="heroVideo" autoplay muted loop playsinline src="SEU_VIDEO_AQUI.mp4"></video>
+      <video class="hero-video" id="heroVideo" muted loop playsinline src="SEU_VIDEO_AQUI.mp4"></video>
 
       <!-- Gradient Masks -->
       <div class="hero-video-overlay"></div>
@@ -2103,7 +2112,7 @@
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
         }
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
 
       const video = document.getElementById('heroVideo');
@@ -2140,10 +2149,24 @@
           video.addEventListener('playing', showVideo);
           video.addEventListener('canplay', showVideo);
 
+          // No desktop, inicia o play programaticamente
+          video.play().catch(e => console.log('Autoplay impedido:', e));
+
           if (video.readyState >= 2) {
             showVideo();
           }
         }
+      }
+    });
+
+    // Garante o topo no mobile e desktop após o carregamento completo da página (imagens, CSS, etc.)
+    window.addEventListener('load', () => {
+      if (!window.location.hash) {
+        setTimeout(() => {
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }, 50);
       }
     });
 
