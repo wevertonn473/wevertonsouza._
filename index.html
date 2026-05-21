@@ -6,12 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script>
     // Impede restauração de scroll automática no mobile e garante início no topo antes da renderização
-    if (!window.location.hash) {
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
-      window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
     }
+    window.scrollTo(0, 0);
   </script>
   <title>Weverton Souza — Editor de Conteúdo</title>
   <link
@@ -41,8 +39,15 @@
     }
 
     html {
-      scroll-behavior: smooth;
       background: var(--bg);
+    }
+
+    html.smooth-scroll {
+      scroll-behavior: smooth;
+    }
+
+    section, footer {
+      scroll-margin-top: 100px;
     }
 
     body {
@@ -2107,6 +2112,9 @@
 
     // Detecção e Fade-in do Vídeo do Hero
     document.addEventListener('DOMContentLoaded', () => {
+      // Garante que a página inicie no topo ao carregar (DOMContentLoaded)
+      window.scrollTo(0, 0);
+
       const video = document.getElementById('heroVideo');
       const placeholder = document.getElementById('heroVideoPlaceholder');
       
@@ -2149,6 +2157,12 @@
           }
         }
       }
+    });
+
+    // Garante o início no topo após carregamento completo (load) e ativa o scroll suave para interações subsequentes
+    window.addEventListener('load', () => {
+      window.scrollTo(0, 0);
+      document.documentElement.classList.add('smooth-scroll');
     });
 
   </script>
