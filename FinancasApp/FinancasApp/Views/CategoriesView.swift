@@ -13,25 +13,24 @@ struct CategoriesView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
-                section(title: "Receitas", type: .income)
-                section(title: "Despesas", type: .expense)
-            }
-            .navigationTitle("Categorias")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { showingForm = true } label: {
-                        Image(systemName: "plus")
-                    }
+        List {
+            section(title: "Receitas", type: .income)
+            section(title: "Despesas", type: .expense)
+        }
+        .navigationTitle("Categorias")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showingForm = true } label: {
+                    Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showingForm) {
-                CategoryFormView()
-            }
-            .sheet(item: $editingCategory) { category in
-                CategoryFormView(category: category)
-            }
+        }
+        .sheet(isPresented: $showingForm) {
+            CategoryFormView()
+        }
+        .sheet(item: $editingCategory) { category in
+            CategoryFormView(category: category)
         }
     }
 
@@ -71,6 +70,8 @@ struct CategoriesView: View {
 }
 
 #Preview {
-    CategoriesView()
-        .modelContainer(PreviewData.container)
+    NavigationStack {
+        CategoriesView()
+    }
+    .modelContainer(PreviewData.container)
 }

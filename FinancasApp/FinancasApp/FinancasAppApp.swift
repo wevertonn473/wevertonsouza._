@@ -8,9 +8,11 @@ struct FinancasAppApp: App {
     init() {
         do {
             container = try ModelContainer(
-                for: Transaction.self, Category.self, Budget.self
+                for: Transaction.self, Category.self, Budget.self,
+                RecurringRule.self, Goal.self
             )
             SeedData.seedIfNeeded(container.mainContext)
+            RecurringEngine.process(container.mainContext)
         } catch {
             fatalError("Não foi possível criar o ModelContainer: \(error)")
         }

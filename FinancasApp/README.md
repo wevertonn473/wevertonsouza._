@@ -9,11 +9,25 @@ iPhone** usando SwiftData (nada vai para a internet).
 - **Resumo**: saldo do mês, total de receitas e despesas, e um gráfico de pizza
   das despesas por categoria.
 - **Transações**: lance receitas e despesas com valor, categoria, data e
-  descrição. Toque para editar, deslize para apagar.
+  descrição. Toque para editar, deslize para apagar. Tem **busca** (por
+  descrição ou categoria) e **filtros** (por tipo e por categoria), com total
+  do resultado filtrado.
 - **Orçamento mensal**: defina um limite de gasto por categoria e acompanhe o
   progresso com barras (fica vermelho quando você ultrapassa).
-- **Categorias**: já vem com várias categorias prontas e você pode criar novas,
-  escolhendo nome, cor e ícone.
+- **Metas de economia**: crie metas (viagem, reserva, etc.) com valor-alvo,
+  prazo opcional e sugestão de quanto guardar por mês. Adicione aportes e veja
+  o progresso.
+- **Transações recorrentes** (em *Mais → Recorrentes*): lançamentos automáticos
+  para parcelas de financiamento, salário ou assinaturas. Suporta **número fixo
+  de parcelas** (ex.: 48x do financiamento do carro), mostrando "parcela X/Y" e
+  quantas faltam. O app gera as parcelas vencidas automaticamente ao abrir.
+- **Categorias** (em *Mais → Categorias*): já vem com várias categorias prontas
+  e você pode criar novas, escolhendo nome, cor e ícone.
+
+## Organização das telas
+
+5 abas: **Resumo · Transações · Orçamento · Metas · Mais**. A aba *Mais* reúne
+as ferramentas de gerência (Recorrentes e Categorias).
 
 ## Como rodar no seu iPhone
 
@@ -44,9 +58,9 @@ Você precisa de um **Mac com o Xcode 16+** (gratuito na Mac App Store).
 FinancasApp/
 ├── FinancasApp.xcodeproj      → projeto do Xcode
 └── FinancasApp/
-    ├── FinancasAppApp.swift    → ponto de entrada e configuração do banco
-    ├── Models/                 → Transaction, Category, Budget, TransactionType
-    ├── Views/                  → telas (Resumo, Transações, Orçamento, Categorias)
-    ├── Helpers/                → moeda, cores, datas, dados iniciais
-    └── Assets.xcassets/        → ícone e cor de destaque
+    ├── FinancasAppApp.swift    → ponto de entrada, banco e geração de recorrentes
+    ├── Models/                 → Transaction, Category, Budget, RecurringRule, Goal
+    ├── Views/                  → telas (Resumo, Transações, Orçamento, Metas, Mais…)
+    ├── Helpers/                → moeda, cores, datas, dados iniciais, motor de recorrência
+    └── Assets.xcassets/        → ícone do app e cor de destaque
 ```

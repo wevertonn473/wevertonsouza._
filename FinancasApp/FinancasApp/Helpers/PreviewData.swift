@@ -8,6 +8,7 @@ enum PreviewData {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
         let container = try! ModelContainer(
             for: Transaction.self, Category.self, Budget.self,
+            RecurringRule.self, Goal.self,
             configurations: config
         )
         let context = container.mainContext
@@ -34,6 +35,39 @@ enum PreviewData {
             let (month, year) = now.monthYear()
             context.insert(Budget(limit: 600, month: month, year: year, category: food))
         }
+
+        // Recorrente: financiamento do carro (parcela mensal).
+        if let transport {
+            let start = Calendar.current.date(byAdding: .month, value: -3, to: now) ?? now
+            let financing = RecurringRule(
+                amount: 1250,
+                note: "Financiamento do carro",
+                type: .expense,
+                frequency: .monthly,
+                startDate: start,
+                installmentTotal: 48,
+                category: transport
+            )
+            context.insert(financing)
+            RecurringEngine.generate(for: financing, in: context, now: now)
+        }
+
+        // Metas de economia.
+        context.insert(Goal(
+            name: "Viagem",
+            targetAmount: 8000,
+            currentAmount: 3200,
+            icon: "airplane",
+            colorHex: "32ADE6",
+            deadline: Calendar.current.date(byAdding: .month, value: 8, to: now)
+        ))
+        context.insert(Goal(
+            name: "Reserva de emergência",
+            targetAmount: 15000,
+            currentAmount: 15000,
+            icon: "shield.fill",
+            colorHex: "34C759"
+        ))
 
         try? context.save()
         return container
