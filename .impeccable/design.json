@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T02:23:56+00:00",
+  "title": "Design System: Weverton Souza",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Preto de Sala",
+        "canonical": "#0c0b0a",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#1d1b19",
+          "#302d2a",
+          "#46423e",
+          "#625d58",
+          "#87817b",
+          "#b3aea8",
+          "#e6e3df"
+        ]
+      },
+      "ground-raised": {
+        "role": "neutral",
+        "displayName": "Preto de Moldura",
+        "canonical": "#151412",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#151412",
+          "#2a2825",
+          "#423f3b",
+          "#5f5b56",
+          "#86817b",
+          "#b4afa9",
+          "#e7e4e0"
+        ]
+      },
+      "bone": {
+        "role": "neutral",
+        "displayName": "Osso",
+        "canonical": "#ece8e1",
+        "tonalRamp": [
+          "#24221f",
+          "#3c3934",
+          "#57534c",
+          "#767069",
+          "#98928a",
+          "#bcb7ae",
+          "#ece8e1",
+          "#f7f5f1"
+        ]
+      },
+      "bone-dim": {
+        "role": "neutral",
+        "displayName": "Osso Apagado",
+        "canonical": "#b9b4ab",
+        "tonalRamp": [
+          "#24221f",
+          "#3c3934",
+          "#57534c",
+          "#767069",
+          "#98928a",
+          "#b9b4ab",
+          "#dcd8d1",
+          "#f5f3ef"
+        ]
+      },
+      "ash": {
+        "role": "neutral",
+        "displayName": "Cinza de Película",
+        "canonical": "#8d8880",
+        "tonalRamp": [
+          "#22201e",
+          "#36332f",
+          "#4f4b46",
+          "#6c6761",
+          "#8d8880",
+          "#aea9a2",
+          "#d1cdc7",
+          "#efede9"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(236, 232, 225, 0.14)"
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Forte",
+        "canonical": "rgba(236, 232, 225, 0.32)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Nome no hero e chamada final de contato (clamp 56–168px lá)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de seção; Sobre usa clamp 44–92px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nome de cada trabalho; galeria de cor um passo abaixo (clamp 24–34px)."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "Depoimentos."
+      },
+      "body-large": {
+        "displayName": "Body Large",
+        "purpose": "Apresentação do hero, Sobre, contato."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido e descrições; 16px abaixo de 600px."
+      },
+      "label": {
+        "displayName": "Label (crédito)",
+        "purpose": "Metadado em caixa alta ao lado do que identifica; cor ash."
+      },
+      "label-button": {
+        "displayName": "Label Button",
+        "purpose": "Texto de botão; 15px na seção de contato."
+      },
+      "label-nav": {
+        "displayName": "Label Nav",
+        "purpose": "Links e CTA do nav."
+      }
+    },
+    "shadows": [],
+    "scrims": [
+      {
+        "name": "hero-scrim",
+        "value": "linear-gradient(to top, rgba(12,11,10,.92) 0%, rgba(12,11,10,.55) 32%, rgba(12,11,10,0) 62%), linear-gradient(to bottom, rgba(12,11,10,.55) 0%, rgba(12,11,10,0) 18%)",
+        "purpose": "Legibilidade do nome, legenda e nav sobre o frame do hero."
+      },
+      {
+        "name": "nav-scrolled",
+        "value": "rgba(12, 11, 10, 0.94)",
+        "purpose": "Fundo do nav depois de rolar, com hairline embaixo."
+      },
+      {
+        "name": "lightbox",
+        "value": "rgba(6, 6, 5, 0.96)",
+        "purpose": "Cobertura do player/lightbox."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Curva única (expo-out) para todas as transições de estado."
+      },
+      {
+        "name": "hero-cut",
+        "value": "1500ms, sem transição",
+        "purpose": "Corte seco entre frames do hero; pausa fora da tela, com aba oculta e com reduced-motion."
+      },
+      {
+        "name": "card-flick",
+        "value": "520ms, sem transição",
+        "purpose": "Corte de stills no hover do card de trabalho."
+      },
+      {
+        "name": "reveal",
+        "value": "opacity 0→1 + translateY(8px→0), 400ms, uma vez",
+        "purpose": "Entrada de conteúdo; desligado com prefers-reduced-motion."
+      },
+      {
+        "name": "state",
+        "value": "200–300ms",
+        "purpose": "Cor/borda de botões e links (250ms nos botões)."
+      },
+      {
+        "name": "media-zoom",
+        "value": "scale(1.03), 1000–1200ms",
+        "purpose": "Aproximação lenta da imagem no hover de card e galeria."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "960px"
+      },
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão sólido (WhatsApp)",
+      "kind": "button",
+      "refersTo": "button-solid",
+      "description": "Ação principal: orçamento no WhatsApp. Osso sólido, inverte no hover.",
+      "html": "<a class=\"ds-btn-solid\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z\"/></svg>Orçamento no WhatsApp</a>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-btn-solid { display:inline-flex; align-items:center; gap:12px; min-height:52px; padding:0 26px; font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; font-size:14px; font-weight:700; font-variation-settings:'wdth' 112; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; border:1px solid var(--ink, #ece8e1); border-radius:0; cursor:pointer; transition:background-color .25s var(--ease, cubic-bezier(0.16,1,0.3,1)), color .25s var(--ease, cubic-bezier(0.16,1,0.3,1)); background:var(--ink, #ece8e1); color:var(--bg, #0c0b0a); } .ds-btn-solid:hover { background:transparent; color:var(--ink, #ece8e1); } .ds-btn-solid:focus-visible { outline:2px solid var(--ink, #ece8e1); outline-offset:3px; }"
+    },
+    {
+      "name": "Botão de linha",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Ação secundária (Ver trabalhos). Transparente com hairline forte.",
+      "html": "<a class=\"ds-btn-line\" href=\"#\">Ver trabalhos</a>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-btn-line { display:inline-flex; align-items:center; gap:12px; min-height:52px; padding:0 26px; font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; font-size:14px; font-weight:700; font-variation-settings:'wdth' 112; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; border:1px solid var(--ink, #ece8e1); border-radius:0; cursor:pointer; transition:background-color .25s var(--ease, cubic-bezier(0.16,1,0.3,1)), color .25s var(--ease, cubic-bezier(0.16,1,0.3,1)); background:transparent; color:var(--ink, #ece8e1); border-color:var(--line-strong, rgba(236,232,225,.32)); } .ds-btn-line:hover { border-color:var(--ink, #ece8e1); background:rgba(236,232,225,.06); } .ds-btn-line:focus-visible { outline:2px solid var(--ink, #ece8e1); outline-offset:3px; }"
+    },
+    {
+      "name": "Navegação",
+      "kind": "nav",
+      "refersTo": "nav-cta",
+      "description": "Barra fixa fina: marca, links em caixa alta larga, CTA Orçamento retangular.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\">Weverton Souza</a><ul class=\"ds-nav-links\"><li><a href=\"#\">Trabalhos</a></li><li><a href=\"#\">Cor</a></li><li><a href=\"#\">Sobre</a></li><li><a href=\"#\">Clientes</a></li></ul><a class=\"ds-nav-cta\" href=\"#\">Orçamento</a></nav>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-nav { display:flex; align-items:center; gap:40px; height:68px; padding:0 24px; background:rgba(12,11,10,.94); border-bottom:1px solid var(--line, rgba(236,232,225,.14)); font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; color:var(--ink, #ece8e1); } .ds-nav-brand { text-decoration:none; color:inherit; font-weight:800; font-size:15px; font-variation-settings:'wdth' 112; letter-spacing:.12em; text-transform:uppercase; } .ds-nav-links { display:flex; gap:30px; margin:0 0 0 auto; padding:0; list-style:none; } .ds-nav-links a { text-decoration:none; font-size:13px; font-weight:600; font-variation-settings:'wdth' 112; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2, #b9b4ab); transition:color .2s; } .ds-nav-links a:hover { color:var(--ink, #ece8e1); } .ds-nav-cta { text-decoration:none; color:var(--ink, #ece8e1); font-size:13px; font-weight:700; font-variation-settings:'wdth' 112; letter-spacing:.12em; text-transform:uppercase; padding:10px 18px; border:1px solid var(--ink, #ece8e1); transition:background-color .2s, color .2s; } .ds-nav-cta:hover { background:var(--ink, #ece8e1); color:var(--bg, #0c0b0a); } .ds-nav a:focus-visible { outline:2px solid var(--ink, #ece8e1); outline-offset:3px; }"
+    },
+    {
+      "name": "Card de trabalho",
+      "kind": "card",
+      "refersTo": "play-tag",
+      "description": "Mídia 16:9 sem moldura; hover aproxima a imagem e revela a tag de play; título condensado + crédito ao lado.",
+      "html": "<article class=\"ds-job\" tabindex=\"0\"><div class=\"ds-job-media\"><div class=\"ds-job-frame\"></div><span class=\"ds-job-play\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M2 1l9 5-9 5z\"/></svg>Assistir</span></div><div class=\"ds-job-info\"><h3 class=\"ds-job-title\">Aftermovie — show ao vivo</h3><span class=\"ds-credit\">Aftermovie · Cor</span><p class=\"ds-job-desc\">Corte, ritmo e cor de um show inteiro em poucos minutos.</p></div></article>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-job { font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; color:var(--ink, #ece8e1); cursor:pointer; max-width:640px; } .ds-job:focus-visible { outline:2px solid var(--ink, #ece8e1); outline-offset:3px; } .ds-job-media { position:relative; overflow:hidden; aspect-ratio:16/9; background:var(--bg-2, #151412); } .ds-job-frame { position:absolute; inset:0; background:linear-gradient(135deg, #2a2420, #5a4a3c 55%, #1a1715); transition:transform 1.2s var(--ease, cubic-bezier(0.16,1,0.3,1)); } .ds-job:hover .ds-job-frame { transform:scale(1.03); } .ds-job-play { position:absolute; left:20px; bottom:20px; display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:700; font-variation-settings:'wdth' 112; letter-spacing:.14em; text-transform:uppercase; background:var(--ink, #ece8e1); color:var(--bg, #0c0b0a); padding:10px 14px 10px 12px; opacity:0; transform:translateY(6px); transition:opacity .3s var(--ease, cubic-bezier(0.16,1,0.3,1)), transform .3s var(--ease, cubic-bezier(0.16,1,0.3,1)); } .ds-job:hover .ds-job-play, .ds-job:focus-visible .ds-job-play { opacity:1; transform:none; } .ds-job-info { display:grid; grid-template-columns:1fr auto; gap:6px 24px; padding-top:18px; } .ds-job-title { margin:0; font-size:32px; font-weight:800; font-variation-settings:'wdth' 72; text-transform:uppercase; line-height:.95; } .ds-credit { font-size:12px; font-weight:600; font-variation-settings:'wdth' 112; letter-spacing:.14em; text-transform:uppercase; color:var(--mute, #8d8880); padding-top:6px; white-space:nowrap; } .ds-job-desc { grid-column:1/-1; margin:6px 0 0; color:var(--ink-2, #b9b4ab); font-size:16px; line-height:1.55; max-width:60ch; }"
+    },
+    {
+      "name": "Cabeçalho de seção",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Título condensado à esquerda, apoio curto à direita, hairline embaixo.",
+      "html": "<header class=\"ds-sec-head\"><h2 class=\"ds-sec-title\">Trabalhos</h2><p>Quatro projetos reais, do bruto ao pronto pra postar.</p></header>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-sec-head { display:flex; align-items:end; justify-content:space-between; gap:24px; padding-bottom:28px; border-bottom:1px solid var(--line, rgba(236,232,225,.14)); font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; color:var(--ink, #ece8e1); } .ds-sec-title { margin:0; font-size:72px; font-weight:800; font-variation-settings:'wdth' 72; text-transform:uppercase; line-height:.88; letter-spacing:-.01em; } .ds-sec-head p { margin:0; max-width:40ch; color:var(--ink-2, #b9b4ab); font-size:17px; line-height:1.55; }"
+    },
+    {
+      "name": "Lista de serviços",
+      "kind": "custom",
+      "refersTo": "body",
+      "description": "Linhas separadas por hairlines; serviço à esquerda, detalhe em cinza à direita.",
+      "html": "<ul class=\"ds-services\"><li><span>Reels pra Instagram</span><span>corte, ritmo, legenda</span></li><li><span>Aftermovies</span><span>show e evento</span></li><li><span>Color grading</span><span>DaVinci Resolve</span></li></ul>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-services { list-style:none; margin:0; padding:0; border-top:1px solid var(--line, rgba(236,232,225,.14)); max-width:640px; font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; color:var(--ink, #ece8e1); } .ds-services li { display:flex; justify-content:space-between; gap:24px; padding:16px 0; border-bottom:1px solid var(--line, rgba(236,232,225,.14)); font-size:17px; } .ds-services li span:last-child { color:var(--mute, #8d8880); text-align:right; }"
+    },
+    {
+      "name": "Depoimento",
+      "kind": "custom",
+      "refersTo": "quote",
+      "description": "Citação em Archivo levemente condensado; legenda com hairline, nome e crédito.",
+      "html": "<figure class=\"ds-quote\"><blockquote>Entregou exatamente o que a gente precisava, rápido e sem enrolação.</blockquote><figcaption><span class=\"ds-quote-who\">Nome do cliente</span><span class=\"ds-credit\">Cargo · Empresa</span></figcaption></figure>",
+      "css": ":host { --bg:#0c0b0a; --bg-2:#151412; --ink:#ece8e1; --ink-2:#b9b4ab; --mute:#8d8880; --line:rgba(236,232,225,.14); --line-strong:rgba(236,232,225,.32); --ease:cubic-bezier(0.16,1,0.3,1); } .ds-quote { margin:0; font-family:'Archivo', 'Helvetica Neue', Arial, sans-serif; color:var(--ink, #ece8e1); max-width:560px; } .ds-quote blockquote { margin:0; font-size:26px; line-height:1.32; font-weight:400; font-variation-settings:'wdth' 96; letter-spacing:-.01em; text-wrap:pretty; } .ds-quote figcaption { margin-top:28px; padding-top:18px; border-top:1px solid var(--line, rgba(236,232,225,.14)); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; } .ds-quote-who { font-weight:700; } .ds-credit { font-size:12px; font-weight:600; font-variation-settings:'wdth' 112; letter-spacing:.14em; text-transform:uppercase; color:var(--mute, #8d8880); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Sala de Corte",
+    "overview": "O site se comporta como a tela de uma produtora de vídeo: chão preto quente, imagem real ocupando tudo, cortes secos em vez de transições, e o nome do editor composto como um crédito de abertura de filme. A interface recua para os frames aparecerem; toda a cor do site vem das imagens, nunca da UI.\n\nA densidade é baixa e o ritmo é de trailer: blocos grandes de trabalho, muito espaço vertical entre seções, uma família tipográfica só, esticada nos dois extremos do eixo de largura do Archivo. Títulos são condensados e pesados; créditos e rótulos são largos e espaçados, em caixa alta, como letreiro de ficha técnica. Tudo é reto: sem cantos arredondados, sem sombra, sem vidro. A estrutura é feita de hairlines de 1px.\n\nRejeições confirmadas pelo dono e pelo contrato de direção: o \"kit de site de IA\" (Bebas com itálico serifado, rótulos \"// mono\", números em degradê, cursor custom, marquee, brilho, ruído, glassmorphism) e qualquer acento colorido de marca.",
+    "keyCharacteristics": [
+      "Preto quente + osso, sem acento; a cor é dos frames.",
+      "Archivo variável usado em dois extremos de largura (wdth 72 nos títulos, wdth 112 nos créditos).",
+      "Cantos retos (0px) e hairlines de 1px como única estrutura.",
+      "Plano: nenhuma sombra; profundidade só por imagem e scrim.",
+      "Movimento por corte seco; reveals curtos uma vez; tudo respeita prefers-reduced-motion."
+    ],
+    "rules": [
+      {
+        "name": "The Cor-Vem-do-Frame Rule",
+        "body": "A UI não tem acento. Nenhum elemento de interface ganha matiz; se algo precisa chamar atenção, inverte para osso sobre preto. A cor é exclusiva das imagens e vídeos.",
+        "section": "colors"
+      },
+      {
+        "name": "The Inversão Rule",
+        "body": "O único estado \"forte\" do sistema é a inversão osso/preto (botão sólido, CTA do nav no hover, tag de play, seleção de texto). Não criar um segundo estado de ênfase.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dois-Extremos Rule",
+        "body": "Títulos sempre em wdth 72 peso 800 caixa alta; rótulos sempre em wdth 112 caixa alta espaçada. Nunca usar o meio-termo para nenhum dos dois, e nunca introduzir uma segunda família.",
+        "section": "typography"
+      },
+      {
+        "name": "The Crédito-ao-Lado Rule",
+        "body": "O rótulo em caixa alta é um crédito de metadado: fica ao lado ou abaixo do que identifica (tipo do trabalho à direita do título, cargo na legenda do depoimento). Não é sobretítulo acima de heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sem-Sombra Rule",
+        "body": "Nenhum elemento flutua. Separação é hairline de 1px ou mudança de fundo; leitura sobre imagem é scrim em gradiente do próprio preto de sala, nunca sombra no texto.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do deixar a cor vir só das imagens; UI em preto de sala, osso e cinza.",
+      "Do usar Archivo nos dois extremos: wdth 72 peso 800 caixa alta para títulos, wdth 112 caixa alta espaçada para créditos e botões.",
+      "Do manter cantos retos (0px) e separar tudo com hairlines de 1px.",
+      "Do trocar imagens por corte seco; reveals de conteúdo são opacidade + 8px em 400ms, uma vez, desligados com prefers-reduced-motion.",
+      "Do usar scrim do próprio preto de sala para legibilidade sobre imagem.",
+      "Do colocar o crédito em caixa alta ao lado do que ele identifica."
+    ],
+    "donts": [
+      "Don't usar o kit de site de IA: Bebas com itálico serifado, rótulos \"// mono\", números em degradê, cursor custom, marquee, brilho, ruído ou glass.",
+      "Don't introduzir acento colorido, segunda família tipográfica ou fonte mono.",
+      "Don't arredondar cantos nem usar pílulas.",
+      "Don't usar sombra, text-shadow ou blur.",
+      "Don't usar crossfade entre frames; o corte é seco.",
+      "Don't colocar rótulo em caixa alta como sobretítulo acima de heading."
+    ]
+  }
+}

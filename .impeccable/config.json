@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-03T02:17:57.538Z",
+        "reason": "model triage: hero section is full-bleed imagery; its text sits inside .wrap with a 16-48px gutter"
+      },
+      {
+        "rule": "buried-raster",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-03T02:17:57.555Z",
+        "reason": "model triage: opacity-0 imgs are the hero hard-cut frame stack and hover flick frames, shown one at a time by JS"
+      }
+    ]
+  }
+}
