@@ -172,7 +172,7 @@
 
     /* Work */
     .work { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(40px, 5vw, 72px) clamp(16px, 2vw, 28px); }
-    .job { grid-column: span 8; cursor: pointer; }
+    .job { grid-column: span 6; cursor: pointer; }
     .job.portrait { grid-column: span 4; }
     .job-media { position: relative; overflow: hidden; background: var(--bg-2); aspect-ratio: 16 / 9; }
     .job.portrait .job-media { aspect-ratio: 0.865; }
@@ -193,8 +193,6 @@
     .job-title { margin: 0; font-size: clamp(26px, 2.6vw, 38px); font-weight: 800; font-variation-settings: "wdth" 72; text-transform: uppercase; line-height: 0.95; }
     .job-kind { align-self: start; padding-top: 6px; white-space: nowrap; }
     .job-desc { grid-column: 1 / -1; margin: 6px 0 0; color: var(--ink-2); max-width: 60ch; font-size: 16px; }
-    .job.row-b-left { grid-column: 1 / span 4; }
-    .job.row-b-right { grid-column: 5 / span 8; }
 
     .stills { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 14px; }
     .stills button { padding: 0; border: 0; background: var(--bg-2); cursor: zoom-in; aspect-ratio: 16/9; overflow: hidden; }
@@ -286,7 +284,7 @@
       .hero-grid { grid-template-columns: 1fr; }
       .hero-caption { text-align: left; min-width: 0; padding-bottom: 0; }
       .hero-caption .cap-title { display: inline; margin: 0 0 0 4px; font-size: 12px; }
-      .job, .job.portrait, .job.row-b-left, .job.row-b-right { grid-column: 1 / -1; }
+      .job, .job.portrait { grid-column: 1 / -1; }
       .job.portrait .job-media { aspect-ratio: 4 / 5; }
       .about-photo { grid-column: 1 / -1; aspect-ratio: 4 / 5; max-width: 520px; }
       .about-text { grid-column: 1 / -1; margin-top: 24px; }
@@ -411,6 +409,18 @@
             </div>
           </article>
 
+          <article class="job rv" tabindex="0" role="button" aria-label="Assistir: The Path of Jabson Lima" data-video="vimeo:1192745460">
+            <div class="job-media">
+              <img src="assets/jabson.jpg" alt="The Path of Jabson Lima — abertura" loading="lazy" />
+              <span class="job-play"><svg><use href="#i-play"/></svg>Assistir</span>
+            </div>
+            <div class="job-info">
+              <h3 class="job-title">The Path of Jabson Lima</h3>
+              <span class="job-kind credit">Mini-doc · DaVinci</span>
+              <p class="job-desc">Mini-documentário de marca pessoal. Estrutura narrativa do zero, colorização no DaVinci.</p>
+            </div>
+          </article>
+
           <article class="job portrait rv" tabindex="0" role="button" aria-label="Assistir: Realtime — Thalles Roberto" data-video="vimeo:1194197573" data-portrait="true">
             <div class="job-media">
               <img src="assets/thalles.jpg" alt="Thalles Roberto no palco" loading="lazy" />
@@ -423,7 +433,7 @@
             </div>
           </article>
 
-          <article class="job portrait row-b-left rv" tabindex="0" role="button" aria-label="Assistir: Reels para redes sociais" data-video="qjnxTR6Lo8g" data-portrait="true">
+          <article class="job portrait rv" tabindex="0" role="button" aria-label="Assistir: Reels para redes sociais" data-video="qjnxTR6Lo8g" data-portrait="true">
             <div class="job-media">
               <img src="assets/reels.jpg" alt="Reels — vídeo para redes sociais" loading="lazy" />
               <span class="job-play"><svg><use href="#i-play"/></svg>Assistir</span>
@@ -435,15 +445,15 @@
             </div>
           </article>
 
-          <article class="job row-b-right rv" tabindex="0" role="button" aria-label="Assistir: The Path of Jabson Lima" data-video="vimeo:1192745460">
+          <article class="job portrait rv" tabindex="0" role="button" aria-label="Assistir: Bruna Herdy" data-video="file:assets/bruna-herdy.mp4" data-poster="assets/bruna-herdy.jpg" data-portrait="true">
             <div class="job-media">
-              <img src="assets/jabson.jpg" alt="The Path of Jabson Lima — abertura" loading="lazy" />
+              <img src="assets/bruna-herdy.jpg" alt="Bruna Herdy falando para a câmera, sentada em um sofá" loading="lazy" />
               <span class="job-play"><svg><use href="#i-play"/></svg>Assistir</span>
             </div>
             <div class="job-info">
-              <h3 class="job-title">The Path of Jabson Lima</h3>
-              <span class="job-kind credit">Mini-doc · DaVinci</span>
-              <p class="job-desc">Mini-documentário de marca pessoal. Estrutura narrativa do zero, colorização no DaVinci.</p>
+              <h3 class="job-title">Bruna Herdy</h3>
+              <span class="job-kind credit">Reels · Perfil pessoal</span>
+              <p class="job-desc">Fala direta pra câmera, legendas animadas e imagens de apoio que dão ritmo à história.</p>
             </div>
           </article>
         </div>
