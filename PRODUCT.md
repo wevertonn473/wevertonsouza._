@@ -18,7 +18,7 @@ Editor que recebe o material bruto e devolve pronto pra postar: corte, ritmo, co
 ## Capabilities and Constraints
 - Site estático: `index.html` + imagens em `assets/` (JPG). Sem build, sem dependências além da fonte Archivo (Google Fonts). Publicado via GitHub (repo wevertonn473/wevertonsouza._).
 - Vídeos hospedados no Vimeo e YouTube, abertos em lightbox. Exceção: a campanha Óticas Faraó e o Reels da Bruna Herdy ficam no próprio repo (assets/farao.mp4, assets/bruna-herdy.mp4).
-- Contato: WhatsApp 5522997001417 e Instagram @wevertonsouza._.
+- Contato: WhatsApp 5522999724863 e Instagram @wevertonsouza._.
 - Seções: projetos (5), color grading (Jesus in Concert, Editorial Fashion Film), sobre, depoimentos, contato.
 
 ## Brand Commitments
