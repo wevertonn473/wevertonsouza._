@@ -209,13 +209,16 @@
     .grade-head h3 { margin: 0; font-size: clamp(24px, 2.4vw, 34px); font-weight: 800; font-variation-settings: "wdth" 72; text-transform: uppercase; line-height: 1; }
     .g-concert { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .g-concert .shot:first-child { grid-column: span 2; grid-row: span 2; }
-    .g-fashion { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .g-fashion { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
     .shot { padding: 0; border: 0; background: var(--bg-2); cursor: zoom-in; overflow: hidden; display: block; width: 100%; }
     .g-concert .shot { aspect-ratio: 16/9; }
     .g-concert .shot:first-child { aspect-ratio: auto; }
     .g-fashion .shot { aspect-ratio: 9/16; }
     .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
     .shot:hover img { transform: scale(1.03); }
+    .shot.film { position: relative; cursor: pointer; }
+    .shot.film img { position: absolute; inset: 0; }
+    .shot.film .job-play { opacity: 1; transform: none; left: 12px; bottom: 12px; }
 
     /* About */
     .about { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(16px, 2vw, 28px); align-items: start; }
@@ -263,7 +266,7 @@
     .lb-stage { position: relative; width: min(1280px, 100%); aspect-ratio: 16/9; max-height: calc(100svh - 120px); }
     .lb-stage.portrait { width: auto; height: min(82svh, 900px); aspect-ratio: 9/16; }
     .lb-stage.photo { aspect-ratio: auto; width: auto; height: auto; display: flex; align-items: center; justify-content: center; }
-    .lb iframe { width: 100%; height: 100%; border: 0; background: #000; }
+    .lb iframe, .lb video { display: block; width: 100%; height: 100%; border: 0; background: #000; }
     .lb img { max-width: min(1400px, 100%); max-height: calc(100svh - 120px); object-fit: contain; }
     .lb-close { position: absolute; top: 16px; right: var(--gutter); background: none; border: 0; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 12px; font-weight: 700; font-variation-settings: "wdth" 112; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
     .lb-close:hover { color: var(--ink); }
@@ -288,13 +291,16 @@
       .about-photo { grid-column: 1 / -1; aspect-ratio: 4 / 5; max-width: 520px; }
       .about-text { grid-column: 1 / -1; margin-top: 24px; }
       .quotes { grid-template-columns: 1fr; }
-      .g-fashion { grid-template-columns: repeat(2, 1fr); }
+      .g-fashion { grid-template-columns: repeat(4, 1fr); }
+      .shot.film { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
     }
     @media (max-width: 600px) {
       body { font-size: 16px; }
       .sec-head { flex-direction: column; align-items: start; }
       .hero-actions .btn { flex: 1 1 auto; justify-content: center; }
       .g-concert { grid-template-columns: repeat(2, 1fr); }
+      .g-fashion { grid-template-columns: repeat(2, 1fr); }
+      .shot.film { grid-row: auto; aspect-ratio: 9/16; }
       .g-concert .shot:first-child, .g-concert .shot:last-child { grid-column: span 2; grid-row: auto; aspect-ratio: 16/9; }
       .stills { grid-template-columns: repeat(3, 1fr); }
       .job-info { grid-template-columns: 1fr; }
@@ -464,8 +470,9 @@
         </div>
 
         <div class="grade rv">
-          <div class="grade-head"><h3>Editorial Fashion Film</h3><span class="credit">Fashion · Cor</span></div>
+          <div class="grade-head"><h3>Editorial Fashion Film</h3><span class="credit">Campanha Óticas Faraó · Cor</span></div>
           <div class="g-fashion" data-gallery>
+            <button class="shot film" type="button" aria-label="Assistir: campanha Óticas Faraó" data-video="file:assets/farao.mp4" data-poster="assets/farao.jpg" data-portrait="true"><img src="assets/farao.jpg" alt="Modelo de óculos na campanha da Óticas Faraó" loading="lazy" /><span class="job-play"><svg><use href="#i-play"/></svg>Assistir</span></button>
             <button class="shot" type="button" data-img="assets/fashion-1.jpg" aria-label="Ampliar frame 1"><img src="assets/fashion-1.jpg" alt="Editorial Fashion — frame 1" loading="lazy" /></button>
             <button class="shot" type="button" data-img="assets/fashion-2.jpg" aria-label="Ampliar frame 2"><img src="assets/fashion-2.jpg" alt="Editorial Fashion — frame 2" loading="lazy" /></button>
             <button class="shot" type="button" data-img="assets/fashion-3.jpg" aria-label="Ampliar frame 3"><img src="assets/fashion-3.jpg" alt="Editorial Fashion — frame 3" loading="lazy" /></button>
@@ -630,10 +637,11 @@
         if (id.indexOf('vimeo:') === 0) src = 'https://player.vimeo.com/video/' + id.slice(6) + '?autoplay=1&title=0&byline=0&portrait=0&color=ece8e1';
         else src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
         stage.className = 'lb-stage' + (job.dataset.portrait === 'true' ? ' portrait' : '');
-        stage.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Player de vídeo"></iframe>';
+        if (id.indexOf('file:') === 0) stage.innerHTML = '<video src="' + id.slice(5) + '" poster="' + job.dataset.poster + '" controls autoplay playsinline></video>';
+        else stage.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Player de vídeo"></iframe>';
         open();
       };
-      document.querySelectorAll('.job').forEach(function (job) {
+      document.querySelectorAll('.job, .film').forEach(function (job) {
         job.addEventListener('click', function (e) { if (e.target.closest('.stills')) return; openVideo(job); });
         job.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && e.target === job) { e.preventDefault(); openVideo(job); } });
       });
