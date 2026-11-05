@@ -182,7 +182,7 @@ Container de até 1440px com gutter fluido (clamp 16–48px). Seções separadas
 - **Trabalhos:** grade de 12 colunas; trabalhos horizontais ocupam 6 colunas na primeira fileira, verticais 4 na fileira seguinte. Gap vertical grande (clamp 40–72px), horizontal clamp 16–28px.
 - **Galerias de mídia:** gap de 6px fixo (stills e color grading), como uma folha de contato. Concert: 3 colunas com o primeiro frame em 2×2; Fashion: 5 colunas em 9:16, com o vídeo da campanha como primeiro tile (até 960px, 4 colunas com o vídeo em 2×2; até 600px, 2 colunas com o vídeo na largura toda).
 - **Sobre:** foto em 4 colunas, texto da coluna 6 à 12.
-- **Breakpoints:** 960px (nav vira drawer, tudo vai para coluna única, depoimentos empilham) e 600px (corpo 16px, botões ocupam a largura, tag de play sempre visível, legenda do hero simplificada).
+- **Breakpoints:** 960px (nav vira drawer, tudo vai para coluna única, depoimentos empilham) e 600px (corpo 16px, botões ocupam a largura, tag de play sempre visível, legenda do hero simplificada, nome grande do hero oculto para não cobrir as imagens; o nome fica no nav).
 
 ## Elevation & Depth
 
